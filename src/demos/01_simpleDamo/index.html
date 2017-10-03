@@ -18,10 +18,8 @@
             render: function(){
                 return(
                     <section>
-                        <h1>The New</h1>
-                        <div>This is the new tag</div>
-                        <div>This is the new tag</div>
-                        <div>This is the new tag</div>
+                        <h1>{this.props.title}</h1>
+                        <h3>{this.props.desc}</h3>
                         <hr/>
                     </section>
                 );
@@ -30,10 +28,10 @@
 
         ReactDOM.render(
             <section>
-                <MyComp />
-                <MyComp />
-                <MyComp />
-                <MyComp />
+                <MyComp title="Move_1" desc="This is description_1"/>
+                <MyComp title="Move_2" desc="This is description_2"/>
+                <MyComp title="Move_3" desc="This is description_3"/>
+                <MyComp title="Move_4" desc="This is description_4"/>
             </section>, document.getElementById('example'));
     </script>
     
