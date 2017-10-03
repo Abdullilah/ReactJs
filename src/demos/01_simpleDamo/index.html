@@ -62,11 +62,14 @@
             getInitialState: function(){
                 return {
                     comments: [
-                        "This is the first Comment",
-                        "This is the second Comment",
-                        "This is the third Comment"
+                        
                     ]
                 }
+            },
+            addComment: function(text){
+                var arr = this.state.comments;
+                arr.push(text);
+                this.setState({comments: arr});
             },
             removeComment: function(i){
                 var arr = this.state.comments;
@@ -86,9 +89,13 @@
             render: function(){
                 return(
                     <section>
-                        {
-                            this.state.comments.map(this.eachComment)
-                        }
+                        <button className="button-info create" onClick={this.addComment.bind(null, "Default Comment")}>Add New</button>
+                        <div>
+                            {
+                                this.state.comments.map(this.eachComment)
+                            }
+                        </div>
+                        
                     </section>
                 );
             }
