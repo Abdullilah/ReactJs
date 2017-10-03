@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width-device-width, initial-scale=1">
     <title>Simple Demo</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
     <script src="../../js/react.min.js"></script>
     <script src="../../js/react-dom.min.js"></script>
     <script src="../../js/browser.min.js"></script>
@@ -15,23 +16,28 @@
     <script type="text/babel">
 
         var MyComp = React.createClass({
+            edit: function(){
+                alert('Sure you want to edit this? ' + this.props.children);
+            },
+            remove: function(){
+                alert('Sure you want to remove this? ' + this.props.children);
+            },
             render: function(){
                 return(
-                    <section>
-                        <h1>{this.props.title}</h1>
-                        <h3>{this.props.desc}</h3>
-                        <hr/>
-                    </section>
+                    <div className="commentContainer">
+                        <h2 className="commentText">{this.props.children}</h2>
+                        <button onClick={this.edit} className="button-primary">Edit</button>
+                        <button onClick={this.remove} className="button-danger">Remove</button>
+                    </div>
                 );
             }
         });
 
         ReactDOM.render(
             <section>
-                <MyComp title="Move_1" desc="This is description_1"/>
-                <MyComp title="Move_2" desc="This is description_2"/>
-                <MyComp title="Move_3" desc="This is description_3"/>
-                <MyComp title="Move_4" desc="This is description_4"/>
+                <MyComp>First comment</MyComp>
+                <MyComp>Second comment</MyComp>
+                <MyComp>Third comment</MyComp>
             </section>, document.getElementById('example'));
     </script>
     
