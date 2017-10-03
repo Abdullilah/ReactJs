@@ -16,11 +16,25 @@
 
         var MyComp = React.createClass({
             render: function(){
-                return(<h2>This is the first Component</h2>);
+                return(
+                    <section>
+                        <h1>The New</h1>
+                        <div>This is the new tag</div>
+                        <div>This is the new tag</div>
+                        <div>This is the new tag</div>
+                        <hr/>
+                    </section>
+                );
             }
         });
 
-        ReactDOM.render(<MyComp />, document.getElementById('example'));
+        ReactDOM.render(
+            <section>
+                <MyComp />
+                <MyComp />
+                <MyComp />
+                <MyComp />
+            </section>, document.getElementById('example'));
     </script>
     
 </body>
