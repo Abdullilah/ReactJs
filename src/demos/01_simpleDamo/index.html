@@ -16,18 +16,24 @@
     <script type="text/babel">
 
         var MyComp = React.createClass({
-            edit: function(){
-                alert('Sure you want to edit this? ' + this.props.children);
+            
+            getInitialState: function(){
+                return {checked : true}
             },
-            remove: function(){
-                alert('Sure you want to remove this? ' + this.props.children);
+            changedState: function(){
+                this.setState({checked : !this.state.checked});
             },
             render: function(){
+                var message;
+                if(this.state.checked){
+                    this.message = "Checked";
+                } else{
+                    this.message = "Unchecked";
+                }
                 return(
                     <div className="commentContainer">
-                        <h2 className="commentText">{this.props.children}</h2>
-                        <button onClick={this.edit} className="button-primary">Edit</button>
-                        <button onClick={this.remove} className="button-danger">Remove</button>
+                        <input type="checkbox" defaultChecked={this.state.checked} onChange={this.changedState}></input>
+                        <h2>This status is: {this.message}</h2>
                     </div>
                 );
             }
@@ -36,8 +42,6 @@
         ReactDOM.render(
             <section>
                 <MyComp>First comment</MyComp>
-                <MyComp>Second comment</MyComp>
-                <MyComp>Third comment</MyComp>
             </section>, document.getElementById('example'));
     </script>
     
