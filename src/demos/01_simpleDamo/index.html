@@ -13,37 +13,54 @@
 
     <div id="example"></div>
     
-    <script type="text/babel">
-
+     <script type="text/babel">
         var MyComp = React.createClass({
-            
             getInitialState: function(){
-                return {checked : true}
+                return {editing: false}
             },
-            changedState: function(){
-                this.setState({checked : !this.state.checked});
+            edit: function(){
+                this.setState({editing: true});
             },
-            render: function(){
-                var message;
-                if(this.state.checked){
-                    this.message = "Checked";
-                } else{
-                    this.message = "Unchecked";
-                }
+            remove: function(){
+                alert('Sure you want to remove this? ' + this.props.children);
+            },
+            save: function(){
+                this.setState({editing: false});
+            },
+            renderNormal: function(){
                 return(
                     <div className="commentContainer">
-                        <input type="checkbox" defaultChecked={this.state.checked} onChange={this.changedState}></input>
-                        <h2>This status is: {this.message}</h2>
+                        <h2 className="commentText">{this.props.children}</h2>
+                        <button onClick={this.edit} className="button-primary">Edit</button>
+                        <button onClick={this.remove} className="button-danger">Remove</button>
                     </div>
                 );
+            },
+            renderForm: function(){
+                return(
+                    <div className="commentContainer">
+                        <textarea defaultValue={this.props.children}></textarea><br/>
+                        <button onClick={this.save} className="button-success">Save</button>
+                    </div>
+                );
+            },
+            render: function(){
+                if(this.state.editing){
+                    return this.renderForm();
+                } else{
+                    return this.renderNormal();
+                }
             }
         });
-
         ReactDOM.render(
             <section>
                 <MyComp>First comment</MyComp>
+                <MyComp>Second comment</MyComp>
+                <MyComp>Third comment</MyComp>
             </section>, document.getElementById('example'));
     </script>
     
 </body>
 </html>
+
+
