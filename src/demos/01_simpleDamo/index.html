@@ -13,7 +13,14 @@
     <div id="example"></div>
     
     <script type="text/babel">
-        ReactDOM.render(<h1>This is the first step</h1>, document.getElementById('example'));
+
+        var MyComp = React.createClass({
+            render: function(){
+                return(<h2>This is the first Component</h2>);
+            }
+        });
+
+        ReactDOM.render(<MyComp />, document.getElementById('example'));
     </script>
     
 </body>
