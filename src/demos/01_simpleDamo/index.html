@@ -22,11 +22,13 @@
                 this.setState({editing: true});
             },
             remove: function(){
-                alert('Sure you want to remove this? ' + this.props.children);
+                if(confirm('Are you sure ?')){
+                    this.props.removeCommentText(this.props.index);    
+                }
+                
             },
             save: function(){
-                var newVal = this.refs.newText.value;
-                console.log(newVal);
+                this.props.updateCommentText(this.refs.newText.value ,this.props.index);
                 this.setState({editing: false});
             },
             renderNormal: function(){
@@ -66,13 +68,26 @@
                     ]
                 }
             },
+            removeComment: function(i){
+                var arr = this.state.comments;
+                arr.splice(i,1);
+                this.setState({comments: arr});
+            },
+            updateComment: function(newText, i){
+                var arr = this.state.comments;
+                arr[i] = newText;
+                this.setState({comments: arr});
+            },
+            eachComment: function(text,i){
+                return (<MyComp key={i} index={i} updateCommentText={this.updateComment} removeCommentText={this.removeComment}>
+                            {text}
+                        </MyComp>);
+            },
             render: function(){
                 return(
                     <section>
                         {
-                            this.state.comments.map(function(text,i){
-                                return (<MyComp key={i}>{text}</MyComp>);
-                            })
+                            this.state.comments.map(this.eachComment)
                         }
                     </section>
                 );
