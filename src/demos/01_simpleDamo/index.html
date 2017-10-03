@@ -54,12 +54,33 @@
                 }
             }
         });
-        ReactDOM.render(
-            <section>
-                <MyComp>First comment</MyComp>
-                <MyComp>Second comment</MyComp>
-                <MyComp>Third comment</MyComp>
-            </section>, document.getElementById('example'));
+    
+        var Board = React.createClass({
+            
+            getInitialState: function(){
+                return {
+                    comments: [
+                        "This is the first Comment",
+                        "This is the second Comment",
+                        "This is the third Comment"
+                    ]
+                }
+            },
+            render: function(){
+                return(
+                    <section>
+                        {
+                            this.state.comments.map(function(text,i){
+                                return (<MyComp key={i}>{text}</MyComp>);
+                            })
+                        }
+                    </section>
+                );
+            }
+            
+        });
+
+        ReactDOM.render(<Board />, document.getElementById('example'));
     </script>
     
 </body>
