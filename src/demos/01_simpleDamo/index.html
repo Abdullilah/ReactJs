@@ -8,104 +8,207 @@
     <script src="../../js/react.min.js"></script>
     <script src="../../js/react-dom.min.js"></script>
     <script src="../../js/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-router/2.0.0/ReactRouter.min.js"></script>
 </head>
 <body>
 
     <div id="example"></div>
     
      <script type="text/babel">
-        var MyComp = React.createClass({
-            getInitialState: function(){
-                return {editing: false}
-            },
-            edit: function(){
-                this.setState({editing: true});
-            },
-            remove: function(){
-                if(confirm('Are you sure ?')){
-                    this.props.removeCommentText(this.props.index);    
-                }
-                
-            },
-            save: function(){
-                this.props.updateCommentText(this.refs.newText.value ,this.props.index);
-                this.setState({editing: false});
-            },
-            renderNormal: function(){
-                return(
-                    <div className="commentContainer">
-                        <h2 className="commentText">{this.props.children}</h2>
-                        <button onClick={this.edit} className="button-primary">Edit</button>
-                        <button onClick={this.remove} className="button-danger">Remove</button>
-                    </div>
-                );
-            },
-            renderForm: function(){
-                return(
-                    <div className="commentContainer">
-                        <textarea ref="newText" defaultValue={this.props.children}></textarea><br/>
-                        <button onClick={this.save} className="button-success">Save</button>
-                    </div>
-                );
-            },
-            render: function(){
-                if(this.state.editing){
-                    return this.renderForm();
-                } else{
-                    return this.renderNormal();
-                }
-            }
-        });
-    
-        var Board = React.createClass({
-            
-            getInitialState: function(){
-                return {
-                    comments: [
-                        
-                    ]
-                }
-            },
-            addComment: function(text){
-                var arr = this.state.comments;
-                arr.push(text);
-                this.setState({comments: arr});
-            },
-            removeComment: function(i){
-                var arr = this.state.comments;
-                arr.splice(i,1);
-                this.setState({comments: arr});
-            },
-            updateComment: function(newText, i){
-                var arr = this.state.comments;
-                arr[i] = newText;
-                this.setState({comments: arr});
-            },
-            eachComment: function(text,i){
-                return (<MyComp key={i} index={i} updateCommentText={this.updateComment} removeCommentText={this.removeComment}>
-                            {text}
-                        </MyComp>);
-            },
-            render: function(){
-                return(
-                    <section>
-                        <button className="button-info create" onClick={this.addComment.bind(null, "Default Comment")}>Add New</button>
-                        <div>
-                            {
-                                this.state.comments.map(this.eachComment)
-                            }
-                        </div>
-                        
-                    </section>
-                );
-            }
-            
-        });
+        
+        var { Router, Route, IndexRoute, Link, browserHistory } = ReactRouter
 
-        ReactDOM.render(<Board />, document.getElementById('example'));
+        class Button1 extends React.Component {
+          constructor(props){
+            super(props);
+
+            this.state = {
+              value : this.props.val
+            }
+          }
+
+          clickedBtn(){
+            this.setState({
+              value : this.state.value + 1
+            });
+          }
+
+          render() {
+            return (
+              <button style={
+                    {
+                      width: 100,
+                    }
+                   } onClick={this.clickedBtn.bind(this)}>{this.state.value}
+              </button>
+            );
+          }
+        }
+
+        class Button2 extends React.Component {
+          constructor(props){
+            super(props);
+
+            this.state = {
+              value : this.props.val,
+              color : "#000",
+              size : 14,
+              bgColor : "#DDD"
+            }
+          }
+
+          clickedBtn(){
+            this.setState({
+              value : this.state.value + 1
+            });
+            if(this.state.value > 4){
+              color : this.state.color = "#FF0000";
+              size : this.state.size = 20;
+              bgColor : this.state.bgColor = "#f6a0a0";
+            } else{
+              color : this.state.color = "#0000FF";
+            }
+          }
+
+          render() {
+            return (
+              <button style={
+                    {
+                      width: 100,
+                      color: this.state.color,
+                      fontSize: this.state.size,
+                      backgroundColor: this.state.bgColor
+                    }
+                   } onClick={this.clickedBtn.bind(this)}>{this.state.value}
+              </button>
+            );
+          }
+        }
+
+        class Button3 extends React.Component {
+          constructor(props){
+            super(props);
+
+            this.state = {
+              value : this.props.val,
+              color : "#000",
+              size : 14,
+              bgColor : "#DDD"
+            }
+          }
+
+          clickedBtn(){
+            this.setState({
+              value : this.state.value + 1
+            });
+            if(this.state.value > 4){
+              color : this.state.color = "#FF0000";
+              size : this.state.size = 20;
+              bgColor : this.state.bgColor = "#f6a0a0";
+            } else{
+              color : this.state.color = "#0000FF";
+            }
+          }
+
+          render() {
+            return (
+              <button style={
+                    {
+                      width: 100,
+                      color: this.state.color,
+                      fontSize: this.state.size,
+                      backgroundColor: this.state.bgColor
+                    }
+                   } onClick={this.clickedBtn.bind(this)}>{this.state.value}
+              </button>
+            );
+          }
+        }
+
+        var MainLayout = React.createClass({
+          render: function() {
+            return (
+              <div className="app">
+                <header className="primary-header"></header>
+                <aside className="primary-aside">
+                  <ul>
+                    <li><Link to="/">HOME</Link></li>
+                    <li><Link to="/mybuttons">MY BUTTONS</Link></li>
+                  </ul>
+                </aside>
+                <main>
+                  {this.props.children}
+                </main>
+              </div>
+              )
+          }
+        })
+
+        var Home = React.createClass({
+          render: function() {
+            return (
+              <section id="hello-word" style={
+                  {
+                    color: "#222",
+                    backgroundColor: "#DDDDDD",
+                    padding: 10
+                  }
+                }>
+                <h1>Home Page</h1>
+                <Button1 val={0}/>
+                <Button2 val={0}/>
+              </section>
+            )
+          }
+        })
+
+        var SearchLayout = React.createClass({
+          render: function() {
+            return (
+              <div className="search">
+                <header className="search-header"></header>
+                <div className="results">
+                  {this.props.children}
+                </div>
+                <div className="search-footer pagination"></div>
+              </div>
+              )
+          }
+        })
+
+        var Mybuttons = React.createClass({
+          render: function() {
+            return (
+              <section id="hello-word" style={
+                  {
+                    color: "#222",
+                    backgroundColor: "#DDDDDD",
+                    padding: 10
+                  }
+                }>
+                <h1>My Buttons</h1>
+                <Button1 val={0}/>
+                <Button2 val={0}/>
+                <Button3 val={0}/>
+              </section>
+              )
+          }
+        })
+
+        ReactDOM.render((
+          <Router>
+            <Route path="/" component={MainLayout}>
+              <IndexRoute component={Home} />
+              <Route component={SearchLayout}>
+                <Route path="mybuttons" component={Mybuttons} />
+              </Route> 
+            </Route>
+          </Router>
+        ), document.getElementById('example'));
     </script>
     
 </body>
 </html>
+
 
 
